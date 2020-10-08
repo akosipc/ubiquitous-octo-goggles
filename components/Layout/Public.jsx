@@ -1,5 +1,3 @@
-import styles from './styles/Public.module.scss'
-
 const Public = ({ children }) => {
   return (
     <div>
