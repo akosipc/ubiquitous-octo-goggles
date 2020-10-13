@@ -23,11 +23,24 @@ const HomePage = () => {
           tournaments.map((tournament, index) => {
             return (
               <Link 
-                  as={ `${tournament.id}/${tournament.currentMatch.id}` } 
+                  as={ `${tournament.id}/matches` } 
                   key={ index }
-                  href="/[tournamentUrl]/[matchId]" > 
+                  href="/[tournamentUrl]/matches" > 
                 <a>
-                  Test 
+                  <div className='bg-white rounded-lg p-6'>
+                    <img/>
+                    <div className='text-left'>
+                      <h2 className='text-lg'> { tournament.attributes.name } </h2>
+                      <div className='text-purple-500'> { tournament.attributes.tournamentType } </div>
+
+                      <div className='text-gray-600'>
+                        { tournament.relationships.participants.links.meta.count }
+                        &nbsp;
+                        Participants
+                      </div>
+                    </div>
+                  </div>
+                  { tournament.attributes.timestamps.startsAt }
                 </a>
               </Link>
             )
