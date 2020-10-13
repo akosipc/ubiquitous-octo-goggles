@@ -5,6 +5,8 @@ import Dashboard from '../components/Layout/Dashboard'
 import Spinner from '../components/Shared/Spinner'
 import ErrorBoundary from '../components/Shared/ErrorBoundary'
 
+import DashboardCard from '../components/Dashboard/Card'
+
 import { fetchTournaments } from '../lib/ChallongeClient'
 
 const HomePage = () => {
@@ -16,7 +18,7 @@ const HomePage = () => {
   return (
     <>
       <Head>
-        <title> Dashboard - BYB </title>
+        <title> Ongoing Tournaments - BYB </title>
       </Head>
       <Dashboard>
         {
@@ -27,20 +29,11 @@ const HomePage = () => {
                   key={ index }
                   href="/[tournamentUrl]/matches" > 
                 <a>
-                  <div className='bg-white rounded-lg p-6'>
-                    <img/>
-                    <div className='text-left'>
-                      <h2 className='text-lg'> { tournament.attributes.name } </h2>
-                      <div className='text-purple-500'> { tournament.attributes.tournamentType } </div>
-
-                      <div className='text-gray-600'>
-                        { tournament.relationships.participants.links.meta.count }
-                        &nbsp;
-                        Participants
-                      </div>
-                    </div>
-                  </div>
-                  { tournament.attributes.timestamps.startsAt }
+                  <DashboardCard
+                    name={ tournament.attributes.name }
+                    type={ tournament.attributes.tournamentType }
+                    participantCount={ tournament.relationships.participants.links.meta.count }
+                  />
                 </a>
               </Link>
             )

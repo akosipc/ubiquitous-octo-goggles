@@ -5,7 +5,7 @@ const Dashboard = ({ children }) => {
     <>
       <Sidebar />
     
-      <main className='container mx-auto px-4'>
+      <main className='container mx-auto p-4 grid grid-cols-3 gap-4'>
         { children }
       </main>
     </>
@@ -35,8 +35,7 @@ const Logo = () => {
 
 const Navbar = () => {
   return (
-    <ul className='mt-4'>
-      <li> 1 </li>
+    <ul className='mt-8'>
     </ul>
   )
 }
