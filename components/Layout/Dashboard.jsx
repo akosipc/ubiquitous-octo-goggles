@@ -4,7 +4,8 @@ const Dashboard = ({ children }) => {
   return (
     <>
       <Sidebar />
-    
+      <Breadcrumbs/>
+
       <main className='container mx-auto p-4'>
         { children }
       </main>
@@ -37,6 +38,13 @@ const Navbar = () => {
   return (
     <ul className='mt-8'>
     </ul>
+  )
+}
+
+const Breadcrumbs = () => {
+  return (
+    <div>
+    </div>
   )
 }
 

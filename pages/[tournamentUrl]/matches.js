@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Link from 'next/link'
 
-import { find, filter, capitalize } from 'lodash'
+import { filter, capitalize, includes } from 'lodash'
 
 import Spinner from '../../components/Shared/Spinner'
 import Dashboard from '../../components/Layout/Dashboard'
@@ -12,31 +12,54 @@ import MatchCard from '../../components/Match/Card'
 
 import { fetchTournament } from '../../lib/ChallongeClient'
 
-const selectMatches = (collection = []) => { return filter(collection, { type: 'match' }) }
-const selectParticipants = (collection = []) => { return filter(collection, { type: 'participant' }) }
+const selectMatchParticipants = (collection = [], identifiers) => { 
+  return filter(collection, (participant) => {
+    return identifiers.includes(participant.id)
+  })
+}
 
-const renderMatches = (tournamentUrl, matches = []) => {
+const renderMatches = (tournamentUrl, matches = [], participants = []) => {
   if (matches.length === 0) {
     return <BlankSlate/>
   } else {
+    const keys = Object.keys(matches)
+
     return (
-      <div className='grid grid-cols-3 gap-4'>
-        {
-          matches.map((match, index) => {
-            return (
-              <Link
-                as={ `/${tournamentUrl}/matches/${match.id}` }
-                key={ index }
-                href="/[tournamentUrl]/matches/[matchId]"
-              >
-                <a>
-                  <MatchCard />
-                </a>
-              </Link>
-            )
-          })
-        }
-      </div>
+      keys.map(key => {
+        return (
+          <section 
+            key={ key }>
+
+            <h2 className='font-bold'>
+              { `Round ${key}` }
+            </h2>
+
+            <div className='grid grid-cols-3 gap-4 my-2 mb-4'>
+              {
+                matches[key].map((match, index) => {
+                  return (
+                    <Link
+                      as={ `/${tournamentUrl}/matches/${match.id}` }
+                      key={ index }
+                      href="/[tournamentUrl]/matches/[matchId]"
+                    >
+                      <a>
+                        <MatchCard 
+                          state={ match.attributes.state }
+                          identifier={ match.attributes.identifier }
+                          participants={
+                            selectMatchParticipants(participants, [match.relationships.player1.data.id, match.relationships.player2.data.id])
+                          }
+                        />
+                      </a>
+                    </Link>
+                  )
+                })
+              }
+            </div>
+          </section>
+        )
+      })
     )
   }
 }
@@ -48,20 +71,20 @@ const Header = ({ tournament, matchesCount, participantsCount }) => {
         { tournament.name } 
       </h1>
 
-      <div className='flex text-purple-700 items-start text-sm'>
-        <span className='mr-8'>
+      <div className='flex text-purple-700 items-star7 text-sm'>
+        <span className='mr-4'>
           { capitalize(tournament.type) }
         </span>
 
-        <span className='mx-8'>
+        <span className='mx-4'>
           { `Tournament is currently ${tournament.state}` }
         </span>
 
-        <span className='mx-8'>
+        <span className='mx-4'>
           { `${matchesCount} Matches` } 
         </span>
 
-        <span className='mx-8'>
+        <span className='mx-4'>
           { `${participantsCount} Participants` }
         </span>
       </div>
@@ -70,14 +93,13 @@ const Header = ({ tournament, matchesCount, participantsCount }) => {
 }
 
 const Matches = ({ tournamentUrl }) => {
-  const { tournament, included, isLoading, isError } = fetchTournament(tournamentUrl)
+  const { tournament, matches, participants, isLoading, isError } = fetchTournament(tournamentUrl)
 
-  const matches = selectMatches(included)
-  const participants = selectParticipants(included)
+  console.log(matches)
+  console.log(participants)
 
   if (isLoading) return <Spinner/>
   if (isError) return <ErrorBoundary/>
-  if (matches.length === 0) return <BlankSlate/>
 
   return (
     <>
@@ -95,9 +117,9 @@ const Matches = ({ tournamentUrl }) => {
           participantsCount={tournament.relationships.participants.data.length}
         />
 
-        <hr className='mt-4 mb-8'/>
+        <hr className='mt-4 mb-8 border-2 border-teal-700'/>
 
-        { renderMatches(tournamentUrl, matches) }
+        { renderMatches(tournamentUrl, matches, participants) }
       </Dashboard>
     </>
   )
