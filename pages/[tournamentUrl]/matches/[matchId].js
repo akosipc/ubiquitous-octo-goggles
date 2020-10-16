@@ -1,8 +1,10 @@
 import Head from 'next/head'
 
-import Spinner from '../../components/Shared/Spinner'
-import Dashboard from '../../components/Layout/Dashboard'
-import ErrorBoundary from '../../components/Shared/ErrorBoundary'
+import Spinner from '../../../components/Shared/Spinner'
+import Dashboard from '../../../components/Layout/Dashboard'
+import ErrorBoundary from '../../../components/Shared/ErrorBoundary'
+
+import { fetchMatch } from '../../../lib/ChallongeClient'
 
 const Match = ({ tournamentUrl, matchId }) => {
   const { match, isLoading, isError } = fetchMatch(tournamentUrl, matchId)

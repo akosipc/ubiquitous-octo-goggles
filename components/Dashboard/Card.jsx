@@ -1,5 +1,3 @@
-import Link from 'next/link'
-
 import { capitalize } from 'lodash'
 
 const DashboardCard = ({ name, type, participantCount, startsAt }) => {
