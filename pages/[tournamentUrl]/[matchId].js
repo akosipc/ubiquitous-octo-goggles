@@ -1,32 +1,31 @@
 import Head from 'next/head'
 
+import Spinner from '../../components/Shared/Spinner'
 import Dashboard from '../../components/Layout/Dashboard'
+import ErrorBoundary from '../../components/Shared/ErrorBoundary'
 
-const Match = ({}) => {
+const Match = ({ tournamentUrl, matchId }) => {
+  const { match, isLoading, isError } = fetchMatch(tournamentUrl, matchId)
+
+  if (isLoading) return <Spinner/>
+  if (isError) return <ErrorBoundary/>
+
   return (
-    <Dashboard>
+    <>
       <Head>
       </Head>
-
-      <article>
-      </article>
-    </Dashboard>
+      <Dashboard>
+      </Dashboard>
+    </>
   )
 }
 
-export const getStaticPaths = async () => {
+export const getServerSideProps = ({ params }) => {
   return {
-    paths: [
-      { params: { tournamentUrl: '1234', matchId: '1' } },
-      { params: { tournamentUrl: '12345', matchId: '2' } }
-    ],
-    fallback: false
-  }
-}
-
-export const getStaticProps = ({params}) => {
-  return {
-    props: { xx: 'xx' }
+    props: {
+      matchId: params.matchId,
+      tournamentUrl: params.tournamentUrl
+    }
   }
 }
 

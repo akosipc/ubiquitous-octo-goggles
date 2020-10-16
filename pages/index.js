@@ -1,8 +1,8 @@
 import Head from 'next/head'
 import Link from 'next/link'
 
-import Dashboard from '../components/Layout/Dashboard'
 import Spinner from '../components/Shared/Spinner'
+import Dashboard from '../components/Layout/Dashboard'
 import ErrorBoundary from '../components/Shared/ErrorBoundary'
 
 import DashboardCard from '../components/Dashboard/Card'
@@ -21,24 +21,26 @@ const HomePage = () => {
         <title> Ongoing Tournaments - BYB </title>
       </Head>
       <Dashboard>
-        {
-          tournaments.map((tournament, index) => {
-            return (
-              <Link 
-                  as={ `${tournament.id}/matches` } 
-                  key={ index }
-                  href="/[tournamentUrl]/matches" > 
-                <a>
-                  <DashboardCard
-                    name={ tournament.attributes.name }
-                    type={ tournament.attributes.tournamentType }
-                    participantCount={ tournament.relationships.participants.links.meta.count }
-                  />
-                </a>
-              </Link>
-            )
-          })
-        }
+        <div className='grid grid-cols-3 gap-4'>
+          {
+            tournaments.map((tournament, index) => {
+              return (
+                <Link 
+                    as={ `${tournament.id}/matches` } 
+                    key={ index }
+                    href="/[tournamentUrl]/matches" > 
+                  <a>
+                    <DashboardCard
+                      name={ tournament.attributes.name }
+                      type={ tournament.attributes.tournamentType }
+                      participantCount={ tournament.relationships.participants.links.meta.count }
+                    />
+                  </a>
+                </Link>
+              )
+            })
+          }
+        </div>
       </Dashboard>
     </>
   )

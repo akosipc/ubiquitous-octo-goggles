@@ -5,7 +5,7 @@ const Dashboard = ({ children }) => {
     <>
       <Sidebar />
     
-      <main className='container mx-auto p-4 grid grid-cols-3 gap-4'>
+      <main className='container mx-auto p-4'>
         { children }
       </main>
     </>
@@ -27,7 +27,7 @@ const Logo = () => {
   return (
     <Link href='/'>
       <a className='p-2 font-sans bg-gray-900 rounded-full text-center text-sm leading-4'>
-        /
+        /\
       </a>
     </Link>
   )
