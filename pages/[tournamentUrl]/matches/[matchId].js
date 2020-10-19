@@ -9,6 +9,9 @@ import { fetchMatch } from '../../../lib/ChallongeClient'
 const Match = ({ tournamentUrl, matchId }) => {
   const { match, participants, isLoading, isError } = fetchMatch(tournamentUrl, matchId)
 
+  console.log(match)
+  console.log(participants)
+
   if (isLoading) return <Spinner/>
   if (isError) return <ErrorBoundary/>
 

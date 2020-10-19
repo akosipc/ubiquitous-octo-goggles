@@ -1,13 +1,14 @@
 import Head from 'next/head'
 import Link from 'next/link'
 
-import { filter, capitalize, includes } from 'lodash'
+import { filter, includes } from 'lodash'
 
 import Spinner from '../../components/Shared/Spinner'
 import Dashboard from '../../components/Layout/Dashboard'
 import BlankSlate from '../../components/Shared/BlankSlate'
 import ErrorBoundary from '../../components/Shared/ErrorBoundary'
 
+import TournamentHeader from '../../components/Tournament/Header'
 import MatchCard from '../../components/Match/Card'
 
 import { fetchTournament } from '../../lib/ChallongeClient'
@@ -64,39 +65,8 @@ const renderMatches = (tournamentUrl, matches = [], participants = []) => {
   }
 }
 
-const Header = ({ tournament, matchesCount, participantsCount }) => {
-  return (
-    <>
-      <h1 className='text-2xl font-bold'> 
-        { tournament.name } 
-      </h1>
-
-      <div className='flex text-purple-700 items-star7 text-sm'>
-        <span className='mr-4'>
-          { capitalize(tournament.type) }
-        </span>
-
-        <span className='mx-4'>
-          { `Tournament is currently ${tournament.state}` }
-        </span>
-
-        <span className='mx-4'>
-          { `${matchesCount} Matches` } 
-        </span>
-
-        <span className='mx-4'>
-          { `${participantsCount} Participants` }
-        </span>
-      </div>
-    </>
-  )
-}
-
 const Matches = ({ tournamentUrl }) => {
   const { tournament, matches, participants, isLoading, isError } = fetchTournament(tournamentUrl)
-
-  console.log(matches)
-  console.log(participants)
 
   if (isLoading) return <Spinner/>
   if (isError) return <ErrorBoundary/>
@@ -107,7 +77,7 @@ const Matches = ({ tournamentUrl }) => {
         <title> { tournament.attributes.name } Matches - BYB </title>
       </Head>
       <Dashboard>
-        <Header
+        <TournamentHeader
           tournament={{
             name: tournament.attributes.name,
             type: tournament.attributes.tournamentType,
