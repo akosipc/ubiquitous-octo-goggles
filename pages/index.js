@@ -7,6 +7,8 @@ import ErrorBoundary from '../components/Shared/ErrorBoundary'
 
 import DashboardCard from '../components/Dashboard/Card'
 
+import ChallongeAuthButton from '../components/Auth/Challonge'
+
 import { fetchTournaments } from '../lib/ChallongeClient'
 
 const HomePage = () => {
@@ -21,6 +23,9 @@ const HomePage = () => {
         <title> Ongoing Tournaments - BYB </title>
       </Head>
       <Dashboard>
+
+        <ChallongeAuthButton/>
+
         <div className='grid grid-cols-3 gap-4'>
           {
             tournaments.map((tournament, index) => {
