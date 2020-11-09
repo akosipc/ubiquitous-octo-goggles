@@ -1,8 +1,3 @@
-import { client } from '../../lib/ChallongeOAuth'
-
-const triggerJSO = () => {
-}
-
 const ChallongeAuthButton = () => {
   return (
     <a 
