@@ -1,26 +1,37 @@
+import Head from 'next/head'
+
+import Navbar from '../components/Layout/Navbar'
+import Fetcher from '../components/Shared/Fetcher'
+
 import { signIn, signOut, useSession } from 'next-auth/client'
 
 const HomePage = () => {
   const [session, loading] = useSession()
 
   return (
-    <>
+    <main className='h-screen'>
+      <Head>
+        <title> Some Interesting Title </title>
+        <meta>
+        </meta>
+      </Head>
+
+      <Navbar session={ session }/>
+
       {
         session ?
         <>
-          Signed in as { session.user.email } <br/>
-          <button onClick={ signOut }>
-            Sign Out
-          </button>
+          <Fetcher/>
         </> :
         <>
-          Not signed in <br/>
-          <button onClick={ signIn }>
-            Sign In
-          </button>
+          <section className='flex align-center justify-center outline-none'>
+            <button onClick={ signIn }>
+              Sign In
+            </button>
+          </section>
         </>
       }
-    </>
+    </main>
   )
 }
 

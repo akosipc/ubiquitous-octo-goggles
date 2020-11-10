@@ -11,6 +11,7 @@
     "postcss-preset-env": "^6.7.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-hook-form": "^6.11.0",
     "sass": "^1.26.11",
     "swr": "^0.3.5",
     "tailwindcss": "^1.8.10"
