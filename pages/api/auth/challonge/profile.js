@@ -11,5 +11,6 @@ export default async (req, res) => {
     }
   })
   const json = await sync.json()
-  res.json(json)
+
+  res.json({...json, data: { attributes: { ...json['data']['attributes'], authorization: req.headers['authorization'] } } })
 }

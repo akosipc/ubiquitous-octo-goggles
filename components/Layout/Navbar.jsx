@@ -8,7 +8,7 @@ const Navbar = ({ session }) => {
       {
         session ?
           <>
-            <Link href='/'>
+            <Link href='/dashboard'>
               <li className='px-4 py-2 cursor-pointer hover:text-gray-500 transition duration-500 ease-in-out'>
                 Home
               </li>
@@ -21,9 +21,9 @@ const Navbar = ({ session }) => {
           </>
           :
           <>
-            <a onClick={ signIn } className='px-4 py-2 cursor-pointer hover:text-gray-500 transition duration-500 ease-in-out'>
+            <a onClick={ () => { signIn('challonge', { callbackUrl: 'http://localhost:3000/dashboard' }) } } className='px-4 py-2 cursor-pointer hover:text-gray-500 transition duration-500 ease-in-out'>
               <li>
-                Sign In
+                Sign in via Challonge
               </li>
             </a>
           </>

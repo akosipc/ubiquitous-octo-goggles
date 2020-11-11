@@ -1,12 +1,21 @@
 // we should include a loading function here
 
+import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
 const Fetcher = () => {
+  const [url, setUrl] = useState(null)
   const { handleSubmit, register, errors } = useForm()
-  const onSubmit = values => {
-    console.log(values)
+
+  const onSubmit = ({ url }) => {
+    setUrl(url.split('/')[3])
   }
+
+  useEffect(() => {
+    if (url !== null) {
+      window.location.replace(`/tournaments/${url}`)
+    }
+  }, [url])
 
   return (
     <form className="m-16 flex align-center justify-center" onSubmit={handleSubmit(onSubmit)}>

@@ -8,7 +8,7 @@ const options = {
       name: 'Challonge',
       type: 'oauth',
       version: '2.0',
-      scopes: ['me'],
+      scope: ['me tournaments:read communities:manage participants:read matches:read'],
       params: { grant_type: 'authorization_code' },
       accessTokenUrl: 'https://labs.challonge.online/oauth/token',
       authorizationUrl: 'https://labs.challonge.online/oauth/authorize?response_type=code',
@@ -19,13 +19,35 @@ const options = {
         return {
           id: profile.data.attributes.uid,
           email: profile.data.attributes.email,
+          image: profile.data.attributes.imageUrl,
           username: profile.data.id
         }
       }
     }
   ],
+  callbacks: {
+    signIn: async (user, account, profile) => {
+      user.name = profile['data']['attributes']['uid']
+      user.accessToken = profile['data']['attributes']['authorization']
+
+      return Promise.resolve(true)
+    },
+    jwt: async (token, user, account, profile, isNewUser) => {
+      if (user) { token = { ...token, accessToken: user.accessToken } }
+
+      return Promise.resolve(token)
+    },
+    session: async (session, user) => {
+      session.accessToken = user.accessToken
+
+      return Promise.resolve(session)
+    }
+  },
   session: {
     jwt: true
+  },
+  jwt: {
+    secret: '',
   }
 }
 
