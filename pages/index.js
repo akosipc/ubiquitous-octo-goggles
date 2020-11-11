@@ -13,21 +13,22 @@ const HomePage = () => {
   }
 
   return (
-    <Layout>
+    <>
       <Head>
         <title> Some Interesting Title </title>
       </Head>
-
-      {
-        session ?
-        <Fetcher/> :
-        <section className='flex align-center justify-center outline-none'>
-          <button onClick={ () => { signIn('challonge', { callbackUrl: 'http://localhost:3000/dashboard' }) } }>
-            Sign in via Challonge
-          </button>
-        </section>
-      }
-    </Layout>
+      <Layout>
+        {
+          session ?
+          <Fetcher/> :
+          <section className='flex align-center justify-center outline-none'>
+            <button onClick={ () => { signIn('challonge', { callbackUrl: 'http://localhost:3000/dashboard' }) } }>
+              Sign in via Challonge
+            </button>
+          </section>
+        }
+      </Layout>
+    </>
   )
 }
 

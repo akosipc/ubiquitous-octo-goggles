@@ -5,13 +5,14 @@ import Fetcher from '../components/Shared/Fetcher'
 
 const Dashboard = () => {
   return (
-    <Layout>
+    <>
       <Head>
         <title> Dashboard - Some Interesting Title </title>
       </Head>
-
-      <Fetcher />
-    </Layout>
+      <Layout>
+        <Fetcher />
+      </Layout>
+    </>
   )
 }
 
