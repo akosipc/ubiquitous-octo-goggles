@@ -29,8 +29,8 @@ Modal.setAppElement('#__next')
 
 const Match = ({ session, tournamentUrl, matchId }) => {
   const router = useRouter()
-  const { match, matchParticipants, isLoading, isError } = fetchMatch(tournamentUrl, matchId, session.accessToken)
-  const { tournament, matches, participants } = fetchTournament(tournamentUrl, session.accessToken)
+  const { match, matchParticipants, isLoading, isError } = fetchMatch(tournamentUrl, matchId, session.challongeAccessToken)
+  const { tournament, matches, participants } = fetchTournament(tournamentUrl, session.challongeAccessToken)
 
   if (isLoading) return <Spinner/>
   if (isError) return <ErrorBoundary/>

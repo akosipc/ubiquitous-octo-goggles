@@ -12,7 +12,7 @@ import TournamentHeader from '../../components/Tournament/Header'
 import { fetchTournament } from '../../lib/ChallongeClient'
 
 const TournamentPage = ({ session, url }) => {
-  const { tournament, matches, participants, isLoading, isError } = fetchTournament(url, session.accessToken)
+  const { tournament, matches, participants, isLoading, isError } = fetchTournament(url, session.challongeAccessToken)
 
   if (isLoading) return <Spinner />
   if (isError) return <ErrorBoundary />

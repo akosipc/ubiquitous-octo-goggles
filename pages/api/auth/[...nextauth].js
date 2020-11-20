@@ -14,7 +14,7 @@ const options = {
       authorizationUrl: 'https://api.labs.challonge.online/oauth/authorize?response_type=code',
       clientId: 'e9a1dce3df04b51fe9f59cad49f3a33a616cb110b10e934949bd9e716b131dcb',
       clientSecret: '0e47a74543633f6233b9a87935fe79277e49c6585a271b1d6234dc8919f5d0a5',
-      profileUrl: 'http://localhost:3000/api/auth/challonge/profile',
+      profileUrl: `${process.env.NEXTAUTH_URL}/api/auth/challonge/profile`,
       profile: (profile) => {
         return {
           id: profile.data.attributes.uid,
@@ -28,17 +28,23 @@ const options = {
   callbacks: {
     signIn: async (user, account, profile) => {
       user.name = profile['data']['attributes']['uid']
-      user.accessToken = profile['data']['attributes']['authorization']
+      user.bettingAccessToken = profile['data']['attributes']['bettingAuthorization']
+      user.challongeAccessToken = profile['data']['attributes']['challongeAuthorization']
 
       return Promise.resolve(true)
     },
     jwt: async (token, user, account, profile, isNewUser) => {
-      if (user) { token = { ...token, accessToken: user.accessToken } }
+      if (user) { token = { 
+        ...token, 
+        bettingAccessToken: user.bettingAccessToken,
+        challongeAccessToken: user.challongeAccessToken
+      } }
 
       return Promise.resolve(token)
     },
     session: async (session, user) => {
-      session.accessToken = user.accessToken
+      session.bettingAccessToken = user.bettingAccessToken
+      session.challongeAccessToken = user.challongeAccessToken
 
       return Promise.resolve(session)
     }
